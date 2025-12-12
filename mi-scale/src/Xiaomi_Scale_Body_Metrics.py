@@ -95,8 +95,18 @@ class bodyMetrics:
 
     # Get Visceral Fat - simplified, more linear approximation
     def getVisceralFat(self):
-        vfal = (self.getFatPercentage() / 100) * self.weight * 0.1 + (self.age * 0.1)
+        if self.sex == 'female':
+            # coefficients recalibrés pour femme
+            vfal = (self.getFatPercentage() / 100) * self.weight * 0.35 + (self.age * 0.05)
+        else:
+            # coefficients recalibrés pour homme
+            vfal = (self.getFatPercentage() / 100) * self.weight * 0.45 + (self.age * 0.08)
+    
+        # On peut ajouter un petit ajustement avec l'impédance si souhaité
+        vfal -= self.impedance * 0.002  # léger ajustement empirique
+
         return self.checkValueOverflow(vfal, 1, 50)
+
 
     # Get BMI
     def getBMI(self):
