@@ -99,8 +99,10 @@ class bodyMetrics:
         bmi = self.weight / (height_m ** 2)
 
         if self.sex == 'male':
-            vfat = 0.134 * self.age + 0.314 * bmi + 0.001410 * self.impedance - 0.145 * height_m - 13.4
+            # Constante ajustée de -13.4 à -2.2 pour correspondre aux valeurs officielles
+            vfat = 0.134 * self.age + 0.314 * bmi + 0.001410 * self.impedance - 0.145 * height_m - 2.2
         else:
+            # Constante femme inchangée (déjà correcte)
             vfat = 0.105 * self.age + 0.275 * bmi + 0.001679 * self.impedance - 0.123 * height_m - 9.8
 
         vfat = max(1, round(vfat))
